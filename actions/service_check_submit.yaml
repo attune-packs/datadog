@@ -1,0 +1,18 @@
+ref: datadog.service_check_submit
+label: "Submit Datadog Service Checks"
+description: "Submit useful current API v1 service checks once; duplicate submissions are caller-controlled"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  checks: {type: array, required: true, minItems: 1, items: {type: object}, description: "Service check objects with check, host_name, status, and optional tags/message/timestamp"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, service-check, write]

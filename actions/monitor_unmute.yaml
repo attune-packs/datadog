@@ -1,0 +1,18 @@
+ref: datadog.monitor_unmute
+label: "Unmute Datadog Monitor"
+description: "Unmute a monitor by cancelling the API v2 downtime returned by monitor_mute"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  downtime_id: {type: string, required: true, description: "Downtime UUID returned by monitor_mute"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, monitor, downtime, mute, destructive]

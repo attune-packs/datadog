@@ -1,0 +1,21 @@
+ref: datadog.monitor_mute
+label: "Mute Datadog Monitor"
+description: "Mute one monitor by creating a current API v2 downtime in one non-retried request"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  monitor_id: {type: integer, required: true, minimum: 1}
+  scope: {type: string, default: "*", required: true, description: "Downtime scope query"}
+  message: {type: string, description: "Optional downtime message"}
+  schedule: {type: object, description: "Optional API v2 one-time or recurring downtime schedule"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, monitor, downtime, mute, write]

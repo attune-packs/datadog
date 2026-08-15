@@ -1,0 +1,18 @@
+ref: datadog.monitor_create
+label: "Create Datadog Monitor"
+description: "Create one API v1 monitor; this mutation is sent exactly once and is not automatically idempotent"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  body: {type: object, required: true, description: "Current Datadog API v1 monitor request object"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, monitor, write]

@@ -1,0 +1,20 @@
+ref: datadog.metric_query
+label: "Query Datadog Metrics"
+description: "Query API v1 timeseries points; response bytes are bounded by credential policy"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  from: {type: integer, required: true, minimum: 0, description: "Unix start timestamp"}
+  to: {type: integer, required: true, minimum: 0, description: "Unix end timestamp"}
+  query: {type: string, required: true, description: "Datadog metrics query"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, metric, read]

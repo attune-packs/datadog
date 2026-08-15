@@ -1,0 +1,13 @@
+This product includes a modified adaptation of the StackStorm Exchange Datadog
+pack, version 1.0.2, authored by Lisa Bekdache with contributions from the
+StackStorm Exchange community.
+
+Source: https://github.com/StackStorm-Exchange/stackstorm-datadog
+Revision: 8ade8fd35cdd30f124206425abfa8738438bd3bc
+Revision date: 2024-09-30T21:44:34Z
+Upstream version: 1.0.2
+Upstream license: Apache License 2.0
+
+The implementation, API selection, security policy, tests, documentation, and
+Attune component metadata have been substantially modified. Datadog is a
+trademark of Datadog, Inc.; no endorsement is implied.

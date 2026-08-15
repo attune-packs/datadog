@@ -1,0 +1,23 @@
+ref: datadog.monitor_list
+label: "List Datadog Monitors"
+description: "List monitors through the current API v1 endpoint with bounded pagination"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true, description: "Pack-owned Datadog credential Key ref"}
+  group_states: {type: string, description: "Comma-separated monitor group states to include"}
+  name: {type: string, description: "Case-insensitive monitor name filter"}
+  tags: {type: string, description: "Comma-separated monitor tags"}
+  monitor_tags: {type: string, description: "Comma-separated tags applied directly to monitors"}
+  with_downtimes: {type: boolean, description: "Include active downtime data"}
+  max_results: {type: integer, default: 100, minimum: 1, maximum: 1000, description: "Maximum monitors returned"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, monitor, read]

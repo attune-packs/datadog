@@ -1,0 +1,19 @@
+ref: datadog.downtime_get
+label: "Get Datadog Downtime"
+description: "Get one API v2 downtime by UUID"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  downtime_id: {type: string, required: true, description: "API v2 downtime UUID"}
+  include: {type: string, description: "Comma-separated created_by and/or monitor relationships"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, downtime, read]

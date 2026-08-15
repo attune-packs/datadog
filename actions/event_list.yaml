@@ -1,0 +1,23 @@
+ref: datadog.event_list
+label: "List Datadog Events"
+description: "List Event Management API v2 events with bounded cursor pagination"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  from: {type: string, description: "Lower timestamp bound in milliseconds"}
+  to: {type: string, description: "Upper timestamp bound in milliseconds"}
+  query: {type: string, description: "Datadog event search query"}
+  sort: {type: string, enum: [timestamp, -timestamp], default: -timestamp}
+  cursor: {type: string, description: "Optional API v2 page cursor"}
+  max_results: {type: integer, default: 100, minimum: 1, maximum: 1000}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, event, read]

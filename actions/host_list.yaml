@@ -1,0 +1,24 @@
+ref: datadog.host_list
+label: "List Datadog Hosts"
+description: "List API v1 hosts with bounded start/count pagination"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  filter: {type: string, description: "Host name filter"}
+  sort_field: {type: string, enum: [status, apps, cpu, iowait, load]}
+  sort_dir: {type: string, enum: [asc, desc]}
+  from: {type: integer, minimum: 0, description: "Hosts reporting since this Unix timestamp"}
+  include_muted_hosts_data: {type: boolean}
+  include_hosts_metadata: {type: boolean}
+  max_results: {type: integer, default: 100, minimum: 1, maximum: 1000}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, host, read]

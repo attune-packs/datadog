@@ -1,0 +1,18 @@
+ref: datadog.tag_list_hosts
+label: "List Datadog Host Tags"
+description: "Get all API v1 host tags, optionally for one source"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  source: {type: string, description: "Datadog host tag source"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, host, tag, read]

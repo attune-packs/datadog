@@ -1,0 +1,19 @@
+ref: datadog.monitor_delete
+label: "Delete Datadog Monitor"
+description: "Delete an API v1 monitor in one non-retried request"
+enabled: true
+runner_type: python
+runtime_version: ">=3.10"
+entry_point: datadog_action.py
+parameter_delivery: stdin
+parameter_format: json
+output_format: json
+default_execution_permission_set_refs: [standard]
+parameters:
+  credential_key: {type: string, default: "datadog.credentials", required: true}
+  monitor_id: {type: integer, required: true, minimum: 1}
+  force: {type: boolean, default: false, description: "Force deletion when referenced by other resources"}
+output:
+  operation: {type: string, required: true}
+  result: {type: object, required: true}
+tags: [datadog, monitor, destructive]
