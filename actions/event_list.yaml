@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "datadog.credentials", required: true}
+  credential_key: {type: string, default: "pack.datadog.credentials", required: true}
   from: {type: string, description: "Lower timestamp bound in milliseconds"}
   to: {type: string, description: "Upper timestamp bound in milliseconds"}
   query: {type: string, description: "Datadog event search query"}

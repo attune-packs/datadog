@@ -10,8 +10,8 @@ generated client on 2026-08-14.
 ## Setup
 
 - Install Python 3.10 or newer and `requirements.txt` in the worker runtime.
-- Create an Attune Key named `datadog.credentials`, or pass another Key ref as
-  `credential_key`.
+- Create a pack-owned Attune Key with canonical ref `pack.datadog.credentials`,
+  or pass another canonical ref as `credential_key`.
 - Grant the action's `standard` permission set access to that pack-owned Key.
 - Give the Datadog application key only the scopes needed by selected actions.
 - Never place API or application keys in action parameters, logs, examples, or

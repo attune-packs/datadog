@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "datadog.credentials", required: true}
+  credential_key: {type: string, default: "pack.datadog.credentials", required: true}
   checks: {type: array, required: true, minItems: 1, items: {type: object}, description: "Service check objects with check, host_name, status, and optional tags/message/timestamp"}
 output:
   operation: {type: string, required: true}

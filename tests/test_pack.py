@@ -90,7 +90,7 @@ class MetadataTests(unittest.TestCase):
             "parameter_format: json\n",
             "output_format: json\n",
             "default_execution_permission_set_refs: [standard]\n",
-            'credential_key: {type: string, default: "datadog.credentials", required: true',
+            'credential_key: {type: string, default: "pack.datadog.credentials", required: true',
             "operation: {type: string, required: true}\n",
             "result: {type: object, required: true}\n",
         )
@@ -371,11 +371,11 @@ class OperationTests(unittest.TestCase):
 
 
 class AttuneAndEntrypointTests(unittest.TestCase):
-    def test_fetch_key_requests_decryption_and_accepts_json_string(self):
+    def test_fetch_key_uses_canonical_ref_and_accepts_json_string(self):
         calls = {}
         get_key = ModuleType("attune.api_client.api.secrets.get_key")
-        get_key.sync_detailed = lambda ref, *, client, decrypt: calls.update(
-            ref=ref, client=client, decrypt=decrypt
+        get_key.sync_detailed = lambda ref, *, client: calls.update(
+            ref=ref, client=client
         ) or SimpleNamespace(
             status_code=200,
             parsed=SimpleNamespace(data=SimpleNamespace(value='{"api_key":"x","application_key":"y"}')),
@@ -391,9 +391,9 @@ class AttuneAndEntrypointTests(unittest.TestCase):
             "attune.api_client.api.secrets": secrets,
         }
         with patch.dict(sys.modules, modules):
-            value = datadog._fetch_key("datadog.credentials")
+            value = datadog._fetch_key("pack.datadog.credentials")
         self.assertEqual({"api_key": "x", "application_key": "y"}, value)
-        self.assertEqual({"ref": "datadog.credentials", "client": "execution-client", "decrypt": True}, calls)
+        self.assertEqual({"ref": "pack.datadog.credentials", "client": "execution-client"}, calls)
 
     def test_execute_action_uses_default_pack_key(self):
         with patch.object(datadog, "_fetch_key", return_value={"api_key": "x", "application_key": "y"}) as fetch, patch.object(
@@ -401,7 +401,7 @@ class AttuneAndEntrypointTests(unittest.TestCase):
         ), patch.dict(datadog.OPERATIONS, {"monitor_get": lambda client, params: {"id": params["monitor_id"]}}):
             result = datadog.execute_action("monitor_get", {"monitor_id": 9})
         self.assertEqual({"id": 9}, result)
-        fetch.assert_called_once_with("datadog.credentials")
+        fetch.assert_called_once_with("pack.datadog.credentials")
 
     def test_entrypoint_success_and_secret_redaction(self):
         spec = importlib.util.spec_from_file_location("datadog_action_test", ROOT / "actions" / "datadog_action.py")

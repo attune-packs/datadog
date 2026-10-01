@@ -81,7 +81,7 @@ def _fetch_key(ref: str) -> dict[str, Any]:
     except ImportError as exc:
         raise DatadogPackError("attune-sdk is required to resolve credential_key") from exc
     try:
-        response = get_key.sync_detailed(ref, client=attune.context.client, decrypt=True)
+        response = get_key.sync_detailed(ref, client=attune.context.client)
     except Exception as exc:
         raise DatadogPackError(f"unable to read credential Key {ref!r}") from exc
     status = int(response.status_code)
@@ -526,5 +526,5 @@ def execute_action(operation: str, params: Mapping[str, Any]) -> dict[str, Any]:
     function = OPERATIONS.get(operation)
     if function is None:
         raise DatadogPackError(f"unsupported Datadog operation {operation!r}")
-    config = _fetch_key(params.get("credential_key", "datadog.credentials"))
+    config = _fetch_key(params.get("credential_key", "pack.datadog.credentials"))
     return function(DatadogClient(config), params)

@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "datadog.credentials", required: true, description: "Pack-owned Datadog credential Key ref"}
+  credential_key: {type: string, default: "pack.datadog.credentials", required: true, description: "Pack-owned Datadog credential Key ref"}
   group_states: {type: string, description: "Comma-separated monitor group states to include"}
   name: {type: string, description: "Case-insensitive monitor name filter"}
   tags: {type: string, description: "Comma-separated monitor tags"}

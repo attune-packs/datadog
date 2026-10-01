@@ -10,7 +10,7 @@ parameter_format: json
 output_format: json
 default_execution_permission_set_refs: [standard]
 parameters:
-  credential_key: {type: string, default: "datadog.credentials", required: true}
+  credential_key: {type: string, default: "pack.datadog.credentials", required: true}
   from: {type: integer, required: true, minimum: 0, description: "Unix start timestamp"}
   to: {type: integer, required: true, minimum: 0, description: "Unix end timestamp"}
   query: {type: string, required: true, description: "Datadog metrics query"}
